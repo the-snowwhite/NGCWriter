@@ -13,7 +13,7 @@ def getMetaData():
             "author": "Malyan",
             "version": "1.0",
             "description": catalog.i18nc("X3G Writer Plugin Description", "Writes X3G to a file"),
-            "api": 2
+            "api": 3
         },
 
         "mesh_writer": {
