@@ -12,7 +12,8 @@ class TestGCode2Ngc(unittest.TestCase):
 
     def test_basic(self):
         data = ['G1 X2 Y1 E100\n',
-                'G0 F7200 X20 Y10\n'
+                'G0 F7200 X20 Y10\n',
+                'M106 S200\n',
                 'M2\n']
 
         self.converter.process(data)
@@ -20,6 +21,7 @@ class TestGCode2Ngc(unittest.TestCase):
         assert(data[0] == 'G1 X2 Y1 A100\n')
         print(data[1])
         assert(data[1] == 'G1 F7200 X20 Y10\n')
+        assert(data[2] == 'M106 P200\n')
 
 
 class TestVelocityExtrusion(unittest.TestCase):
@@ -38,4 +40,4 @@ class TestVelocityExtrusion(unittest.TestCase):
         self.converter.process(data)
 
         print(data)
-        assert(data[0] == '')
+        assert(data[0] == '; comment\n')
