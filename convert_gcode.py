@@ -7,7 +7,7 @@ import argparse
 parser = argparse.ArgumentParser(description="""
 convert a RepRap/Marlin flavor GCode file to a Machinekit/Velocity-Extrusion flavor GCode file
 """)
-parser.add_argument('-i', '--input', help='Input file')
+parser.add_argument('-i', '--input', help='Input file', required=True)
 parser.add_argument('-o', '--ouput', help='Output file', default=None)
 args = parser.parse_args()
 
