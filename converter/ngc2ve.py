@@ -265,7 +265,7 @@ class Ngc2Ve():
             if G == 2:
                 if a2 < a1:
                     a2 += math.pi * 2
-                    angle2 = a2 - a1
+                angle2 = a2 - a1
             else:
                 if a1 < a2:
                     a1 += math.pi * 2
