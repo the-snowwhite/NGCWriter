@@ -1,10 +1,11 @@
 # Copyright (c) 2016-2018 Alexander Roessler
-# Cura is released under the terms of the AGPLv3 or higher.
+# NGCWriter is released under the terms of the AGPLv3 or higher.
 
 from UM.Mesh.MeshWriter import MeshWriter
 from UM.Logger import Logger
-from UM.Application import Application
+from UM.PluginRegistry import PluginRegistry
 
+import io #For StringIO to write the g-code to a buffer.
 import os
 import sys
 path = os.path.dirname(os.path.realpath(__file__))
@@ -26,21 +27,15 @@ class NGCWriter(MeshWriter):
             return False
 
         # Get the g-code.
-        active_build_plate = Application.getInstance().getBuildPlateModel().activeBuildPlate
-        scene = Application.getInstance().getController().getScene()
-        gcode_dict = getattr(scene, "gcode_dict")
-        if not gcode_dict:
-            return False
-        gcode_list = gcode_dict.get(active_build_plate, None)
-        if gcode_list is None:
-            return False
+        gcode = io.StringIO()
+        PluginRegistry.getInstance().getPluginObject("GCodeWriter").write(gcode, None)
+        gcode = gcode.getvalue()
 
         gcodeConverter = GCode2Ngc()
         veConverter = Ngc2Ve()
-        gcodeConverter.process(gcode_list)
-        veConverter.process(gcode_list)
+        gcode = gcodeConverter.process(gcode)
+        gcode = veConverter.process(gcode)
 
-        for gcode in gcode_list:
-            stream.write(gcode)
+        stream.write(gcode)
 
         return True

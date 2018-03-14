@@ -37,20 +37,22 @@ class GCode2Ngc():
         self.hasProgramEnd = False
         self.compile_regex()
 
-    def process_layer(self, layer):
-        newline = self.do_regex_replacements(layer)
-        if (not self.hasProgramEnd) and self.endRegex.match(newline):  # check for end of program
+    def process_layer(self, data):
+        data = self.do_regex_replacements(data)
+        if (not self.hasProgramEnd) and self.endRegex.match(data):  # check for end of program
             self.hasProgramEnd = True
-        return newline
+        return data
 
     def finalize_processing(self, data):
         if not self.hasProgramEnd:
-            data.append(self.endCode + '\n')
+            data += self.endCode + '\n'
+        return data
 
     def process(self, data):
         self.prepare_processing()
 
-        for index, layer in enumerate(data):
-            data[index] = self.process_layer(layer)
+        data = self.process_layer(data)
 
-        self.finalize_processing(data)
+        data = self.finalize_processing(data)
+
+        return data
