@@ -255,8 +255,6 @@ class Ngc2Ve():
             print("i: " + str(i))
             print("j: " + str(j))
             r = (i ** 2 + j ** 2) ** 0.5
-            w = ((x - self.lastx) ** 2 + (y - self.lasty) ** 2) ** 0.5
-            angle = 2 * math.asin(w / (2 * r))
             innerp = centerx * x + centery * y
             len1 = (centerx ** 2 + centery ** 2) ** 0.5
             len2 = (x ** 2 + y ** 2) ** 0.5
@@ -267,7 +265,7 @@ class Ngc2Ve():
             if G == 2:
                 if a2 < a1:
                     a2 += math.pi * 2
-                    angle2 = a2 - a1
+                angle2 = a2 - a1
             else:
                 if a1 < a2:
                     a1 += math.pi * 2
