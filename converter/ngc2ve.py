@@ -330,18 +330,19 @@ class Ngc2Ve():
         self.outputLine("; Input Line Count = " + str(self.line_count))
         self.outputLine("; Output Line Count = " + str(self.output_line_count))
 
-        data.append(''.join(self.outputData))
+        data += ''.join(self.outputData)
         #self.optimizeCross()
+        return data
 
     def process(self, data):
         self.prepare_processing()
 
-        for index, layer in enumerate(data):
-            for line in layer.split('\n'):
-                if line is '':
-                    continue
-                self.process_line(line)
-            data[index] = ''.join(self.outputData)
-            self.outputData = []
+        for line in data.split('\n'):
+            if line is '':
+                continue
+            self.process_line(line)
+        data = ''.join(self.outputData)
+        self.outputData = []
 
-        self.finalize_processing(data)
+        data = self.finalize_processing(data)
+        return data
