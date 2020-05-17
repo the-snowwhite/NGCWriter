@@ -1,6 +1,7 @@
 import re
 import math
 
+from cura.Settings.ExtruderManager import ExtruderManager
 
 class Ngc2Ve():
     def ___init__(self):
@@ -18,7 +19,8 @@ class Ngc2Ve():
         self.crossList = []
         self.totalCross = []
         self.crossTolerance = 0.05
-        self.filament_d = 1.75
+#        self.filament_d = 1.75
+        self.filament_d = ExtruderManager.getInstance().getActiveExtruderStacks()[0].getProperty("material_diameter", "value")
         self.retracted = True
         self.lastx = 0
         self.lasty = 0
